@@ -2,7 +2,7 @@
 <nav class="relative z-40 bg-[#e8ebf0] border-b border-slate-300/60 shadow-md no-print h-14 sm:h-16 md:h-20">
     <div class="max-w-7xl mx-auto px-2 h-full flex items-center justify-between">
 
-        <!-- 左側：Logo 與 桌機版選單 (對齊左側) -->
+        <!-- 左側：Logo 與 桌機版選單 (對齊左側，此處為全站唯一維護選單的地方) -->
         <div class="flex items-center h-full gap-8">
             <!-- Logo 區塊 -->
             <a href="course.html" class="flex items-center h-full p-0 m-0">
@@ -11,7 +11,7 @@
             </a>
 
             <!-- 桌機版選單 (md 以上顯示，靠左對齊緊隨 Logo 旁) -->
-            <div class="hidden md:flex items-center h-full gap-6">
+            <div id="desktop-nav-menu" class="hidden md:flex items-center h-full gap-6">
                 <!-- 選項 1：課表查詢 -->
                 <div class="relative group py-2">
                     <button
@@ -67,7 +67,6 @@
                             <i class="fa-solid fa-map-location text-slate-400"></i>
                             <span>交通方式(未開放)</span>
                         </span>
-
                     </div>
                 </div>
             </div>
@@ -83,56 +82,10 @@
     </div>
 
     <!-- ⚡【行動裝置 RWD 固定高度且自帶內部捲軸面板】 -->
-    <!-- h-auto 與 max-h-0 設定純垂直滑動，當點擊時，JS 會使其高亮切換，當內容超出 max-h-[300px] 時，該區域內部會「自動出現垂直捲動軸」 -->
+    <!-- 這裡不再手寫重複的 HTML，由下方自動同步腳本直接填入 -->
     <div id="mobile-menu-panel"
-        class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 transition-all duration-400 ease-in-out max-h-0 overflow-y-auto"
-        >
-        <div class="py-4 px-6 flex flex-col gap-4 pb-6">
-            <!-- 行動版選單 1：課表查詢 -->
-            <div class="border-b border-slate-300/30 pb-3">
-                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
-                    <i class="fa-solid fa-calendar-days text-emerald-600"></i>
-                    <span>課表查詢</span>
-                </div>
-                <div class="pl-6 flex flex-col gap-2">
-                    <a href="month.html"
-                        class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
-                        <i class="fa-solid fa-rectangle-list text-emerald-600"></i>
-                        <span>整月課表一覽</span>
-                    </a>
-                    <a href="course.html"
-                        class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
-                        <i class="fa-solid fa-calendar-day text-emerald-600"></i>
-                        <span>詳細課表查詢</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- 行動版選單 2：職訓生活 -->
-            <div class="border-b border-slate-300/30 pb-3">
-                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
-                    <i class="fa-solid fa-circle-info text-emerald-600"></i>
-                    <span>職訓好生活</span>
-                </div>
-                <div class="pl-6 flex flex-col gap-2">
-                    <a target="_blank" href="https://jhliao0408.github.io/imPlus/Attachments/VTHandbook.pdf"
-                        class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
-                        <i class="fa-solid fa-book-open text-emerald-600"></i>
-                        <span>學員手冊</span>
-                    </a>
-                    <span
-                        class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
-                        <i class="fa-solid fa-map-location text-slate-400"></i>
-                        <span>分署位置(未開放)</span>
-                    </span>
-                    <span
-                        class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
-                        <i class="fa-solid fa-train-subway text-slate-400"></i>
-                        <span>交通方式(未開放)</span>
-                    </span>
-                </div>
-            </div>
-        </div>
+        class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 transition-all duration-400 ease-in-out max-h-0 overflow-y-auto">
+        <div id="mobile-menu-container" class="py-4 px-6 flex flex-col gap-4 pb-6"></div>
     </div>
 </nav>
 
@@ -170,7 +123,74 @@
     </div>
 </div>
 
-<!-- ⚡【RWD 漢堡選單「固定高度 + 自適應捲軸」控制腳本】 -->
+<!-- ⚡【自動同步選單腳本：從桌機版自動提取產生手機版，免去寫兩次】 -->
+<script>
+    (function () {
+        const desktopNav = document.getElementById('desktop-nav-menu');
+        const mobileContainer = document.getElementById('mobile-menu-container');
+        if (!desktopNav || !mobileContainer) return;
+
+        let html = '';
+        desktopNav.querySelectorAll('.group').forEach((group, idx) => {
+            const btn = group.querySelector('button');
+            const dropdown = group.querySelector('.group-hover\\:block, [class*="group-hover:block"]');
+            if (!btn || !dropdown) return;
+
+            const icon = btn.querySelector('i:first-child');
+            const title = btn.querySelector('span');
+            const iconClass = icon ? icon.className.replace('text-slate-800', 'text-emerald-600') : 'fa-solid fa-folder text-emerald-600';
+            const titleText = title ? title.textContent.trim() : '';
+
+            html += `
+                <div class="border-b border-slate-300/30 pb-3 last:border-b-0">
+                    <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+                        <i class="${iconClass}"></i>
+                        <span>${titleText}</span>
+                    </div>
+                    <div class="pl-6 flex flex-col gap-2">
+            `;
+
+            Array.from(dropdown.children).forEach(child => {
+                if (child.tagName === 'A') {
+                    const href = child.getAttribute('href') || '#';
+                    const target = child.getAttribute('target') ? `target="${child.getAttribute('target')}"` : '';
+                    const i = child.querySelector('i');
+                    const span = child.querySelector('span');
+                    const iClass = i ? i.className : 'fa-solid fa-angle-right text-emerald-600';
+                    const text = span ? span.textContent.trim() : child.textContent.trim();
+
+                    html += `
+                        <a ${target} href="${href}" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
+                            <i class="${iClass}"></i>
+                            <span>${text}</span>
+                        </a>
+                    `;
+                } else if (child.tagName === 'SPAN') {
+                    const i = child.querySelector('i');
+                    const span = child.querySelector('span');
+                    const iClass = i ? i.className : 'fa-solid fa-angle-right text-slate-400';
+                    const text = span ? span.textContent.trim() : child.textContent.trim();
+
+                    html += `
+                        <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                            <i class="${iClass}"></i>
+                            <span>${text}</span>
+                        </span>
+                    `;
+                }
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+        });
+
+        mobileContainer.innerHTML = html;
+    })();
+</script>
+
+<!-- ⚡【RWD 漢堡選單「固定高度 + 自適應捲軸」控制腳本】（完全保留您的原腳本，一字未修） -->
 <script>
     (function () {
         const toggleBtn = document.getElementById('menu-toggle-btn');
