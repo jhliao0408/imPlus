@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITS 課表匯入工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 引入 SheetJS lib for Excel parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+        }
+      
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl">
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-100 p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-slate-800">ITS 課表匯入與轉換工具</h1>
+                <p class="text-slate-500 mt-2">將從 ITS 系統匯出的 Excel 課表，一鍵轉換成網站所需的 `schedule.json` 資料檔。</p>
+            </div>
+
+            <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center bg-slate-50/50">
+                <input type="file" id="excel-uploader" class="hidden" accept=".xlsx, .xls">
+                <button id="upload-button"
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl text-lg">
+                    <i class="fa-solid fa-file-excel mr-3"></i>
+                    <span>點擊此處，選擇要匯入的 ITS Excel 檔</span>
+                </button>
+                <p id="file-name" class="mt-4 text-sm text-slate-500">尚未選擇檔案</p>
+            </div>
+
+            <div class="text-center mt-8">
+                <button id="download-json"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-lg disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
+                    disabled>
+                    <i class="fa-solid fa-download mr-2"></i>
+                    <span>下載 schedule.json 檔案</span>
+                </button>
+            </div>
+            <p id="status" class="mt-4 text-center text-sm text-green-600 font-medium"></p>
+        </div>
+        <div class="text-center mt-6">
+            <a href="index.html" class="text-sm text-slate-500 hover:text-blue-600 transition-all">
+                <i class="fa-solid fa-arrow-left mr-1"></i>
+                返回課表查詢前台
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const uploader = document.getElementById('excel-uploader');
+        const uploadButton = document.getElementById('upload-button');
+        const fileNameDisplay = document.getElementById('file-name');
+        const downloadButton = document.getElementById('download-json');
+        const statusDisplay = document.getElementById('status');
+        let scheduleData = {};
+
+        uploadButton.addEventListener('click', () => uploader.click());
+
+        uploader.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            fileNameDisplay.textContent = `已選擇檔案：${file.name}`;
+            statusDisplay.textContent = "讀取中...";
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+
+                try {
+                    const scheduleSheet = XLSX.utils.sheet_to_json(workbook.Sheets['課表']);
+                    const teacherSheet = XLSX.utils.sheet_to_json(workbook.Sheets['常用老師以及舊資料對應']);
+                    const courseSheet = XLSX.utils.sheet_to_json(workbook.Sheets['常用課程以及單位課程']);
+
+                    const teacherMap = teacherSheet.reduce((acc, row) => {
+                        acc[row['代碼']] = (String(row['老師姓名']).replace(/^\\d+/, '') || '').trim();
+                        return acc;
+                    }, {});
+
+                    const courseMap = courseSheet.reduce((acc, row) => {
+                        acc[row['代碼']] = (String(row['課程名稱']).replace(/^\\d+/, '') || '').trim();
+                        return acc;
+                    }, {});
+
+                    scheduleData = {};
+                    scheduleSheet.forEach(row => {
+                        if (!row['日期']) return;
+
+                        // Excel 日期自動轉換
+                        let date;
+                        
+            
+                        if (typeof row['日期'] === 'number') {
+                            const excelEpoch = new Date(1899, 11, 30);
+                            date = new Date(excelEpoch.getTime() + row['日期'] * 86400000);
+                        } else {
+                            date = new Date(row['日期']);
+                        }
+                        const year = date.getFullYear();
+                        const month = date.getMonth() + 1;
+                        const day = date.getDate();
+                        const formattedDate = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+                        console.log(formattedDate);
+                        
+
+                        if (!scheduleData[formattedDate]) {
+                            scheduleData[formattedDate] = [];
+                        }
+
+                        scheduleData[formattedDate].push({
+                            time: row['時間'] || '',
+                            name: courseMap[row['課程代碼']] || '未知課程',
+                            room: row['教室'] || '未指定',
+                            teacher: teacherMap[row['教師1代碼']] || '未安排'
+                        });
+                    });
+
+                    downloadButton.disabled = false;
+                    statusDisplay.textContent = `🎉 成功解析 ${scheduleSheet.length} 筆課程！請點擊下方按鈕下載。`;
+                } catch (err) {
+                    statusDisplay.textContent = `❌ 解析失敗，請確認 Excel 格式是否正確，並包含 '課表'、'常用老師以及舊資料對應'、'常用課程以及單位課程' 這三個工作表。`;
+                    downloadButton.disabled = true;
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        downloadButton.addEventListener('click', () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(scheduleData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "schedule.json");
+            document.body.appendChild(downloadAnchorNode); // required for firefox
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        });
+    </script>
+</body>
+
+</html>
