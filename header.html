@@ -60,11 +60,6 @@
                             <i class="fa-solid fa-map-location text-slate-400"></i>
                             <span>分署位置</span>
                         </span>
-                        <div class="border-t border-slate-100 my-1"></div>
-                        <span class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-400 cursor-not-allowed opacity-60">
-                            <i class="fa-solid fa-train-subway text-slate-400"></i>
-                            <span>交通方式</span>
-                        </span>
                     </div>
                 </div>
             </div>
@@ -78,23 +73,24 @@
         </div>
     </div>
 
-    <!-- ⚡【行動裝置 RWD 滑動面板】(支援原生流暢上下滾動，解決 iOS/Android 無法滑動問題) -->
+    <!-- ⚡【終極解決方案：Fixed 定位平滑滑動面板】 -->
+    <!-- 使用 fixed 脫離原頁面所有的 CSS 容器限制，並指定 w-full 與 max-h-[85vh] 以防超出可視範圍，完美支援滾動 -->
     <div id="mobile-menu-panel" 
-         class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
+         class="fixed top-14 sm:top-16 left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-2xl md:hidden z-50 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
          style="-webkit-overflow-scrolling: touch;">
-        <div class="py-4 px-6 flex flex-col gap-4 pb-8">
+        <div class="py-5 px-6 flex flex-col gap-4 pb-12">
             <!-- 行動版選單 1：課表查詢 -->
-            <div class="border-b border-slate-300/30 pb-3">
-                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+            <div class="border-b border-slate-300/40 pb-4">
+                <div class="flex items-center gap-2 text-slate-800 font-extrabold text-base sm:text-lg mb-2">
                     <i class="fa-solid fa-calendar-days text-emerald-600"></i>
                     <span>課表查詢</span>
                 </div>
-                <div class="pl-6 flex flex-col gap-2">
-                    <a href="month.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
+                <div class="pl-6 flex flex-col gap-3">
+                    <a href="month.html" class="flex items-center gap-2 text-sm sm:text-base text-slate-700 hover:text-emerald-600 font-bold py-1.5 transition-colors">
                         <i class="fa-solid fa-rectangle-list text-emerald-600"></i>
                         <span>整月課表一覽</span>
                     </a>
-                    <a href="course.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
+                    <a href="course.html" class="flex items-center gap-2 text-sm sm:text-base text-slate-700 hover:text-emerald-600 font-bold py-1.5 transition-colors">
                         <i class="fa-solid fa-calendar-day text-emerald-600"></i>
                         <span>詳細課表查詢</span>
                     </a>
@@ -103,20 +99,20 @@
 
             <!-- 行動版選單 2：職訓生活 -->
             <div class="pb-2 opacity-60">
-                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+                <div class="flex items-center gap-2 text-slate-800 font-extrabold text-base sm:text-lg mb-2">
                     <i class="fa-solid fa-circle-info text-slate-600"></i>
-                    <span>職訓好生活</span>
+                    <span>職訓生活</span>
                 </div>
-                <div class="pl-6 flex flex-col gap-2">
-                    <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                <div class="pl-6 flex flex-col gap-3">
+                    <span class="flex items-center gap-2 text-sm sm:text-base text-slate-500 font-bold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-book-open text-slate-400"></i>
                         <span>學員手冊 (未開放)</span>
                     </span>
-                    <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                    <span class="flex items-center gap-2 text-sm sm:text-base text-slate-500 font-bold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-map-location text-slate-400"></i>
                         <span>分署位置 (未開放)</span>
                     </span>
-                    <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                    <span class="flex items-center gap-2 text-sm sm:text-base text-slate-500 font-bold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-train-subway text-slate-400"></i>
                         <span>交通方式 (未開放)</span>
                     </span>
@@ -157,7 +153,7 @@
     </div>
 </div>
 
-<!-- ⚡【極致流暢 RWD 漢堡選單動畫與滾動控制】 -->
+<!-- ⚡【高度相容性的 RWD 漢堡選單與原生滑動滾動 JS 控制腳本】 -->
 <script>
     (function() {
         const toggleBtn = document.getElementById('menu-toggle-btn');
@@ -172,16 +168,14 @@
                 menuIcon.classList.remove('fa-bars');
                 menuIcon.classList.add('fa-xmark');
                 
-                // 1. 先用 transition 展開面板 (優雅 Slide Down 特效)
+                // 1. 動態追加滑動高度與不透明度 (純 Slide 垂直切換)
+                mobilePanel.style.overflowY = 'hidden';
                 mobilePanel.classList.remove('max-h-0', 'opacity-0');
                 mobilePanel.classList.add('max-h-[85vh]', 'opacity-100');
                 
-                // 2. 為了防止在 300ms 動畫期間有微小的滾動跳動，先 hidden，等動畫跑完再切為 auto
-                mobilePanel.style.overflowY = 'hidden';
-                
+                // 2. 當展開過渡動畫一結束（300ms），立刻解鎖原生滾動，保證 100% 能夠順暢滑動
                 setTimeout(function() {
                     if (isOpen) {
-                        // 3. 動畫結束，移除 overflow-hidden 改用原生滾動類別，確保絕對可以上下順暢捲動！
                         mobilePanel.classList.remove('overflow-hidden');
                         mobilePanel.classList.add('overflow-y-auto');
                         mobilePanel.style.overflowY = 'auto';
@@ -194,12 +188,12 @@
                 menuIcon.classList.remove('fa-xmark');
                 menuIcon.classList.add('fa-bars');
 
-                // 收合時，立即補回 overflow-hidden 避免內容在收回時溢出
+                // 收合時，第一時間關閉滾動條，避免收合時內容突兀跳動
                 mobilePanel.classList.remove('overflow-y-auto');
                 mobilePanel.classList.add('overflow-hidden');
                 mobilePanel.style.overflowY = 'hidden';
 
-                // 觸發收回動畫 (Slide Up)
+                // 觸發純 Slide 向上收回動畫
                 mobilePanel.classList.remove('max-h-[85vh]', 'opacity-100');
                 mobilePanel.classList.add('max-h-0', 'opacity-0');
             }
