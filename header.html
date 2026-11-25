@@ -8,23 +8,23 @@
     <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10"></div>
 </div>
 
-<!-- 頂部導航列 (Navbar) - 整合 RWD 漢堡選單與自適應佈局 -->
-<nav class="relative z-40 bg-[#e8ebf0] border-b border-slate-300/60 shadow-md no-print h-14 sm:h-16 md:h-20">
+<!-- 頂部導航列 (Navbar) - 整合 RWD、等高對齊與 Bootstrap 級平滑滑動選單 -->
+<nav class="relative z-40 bg-[#e8ebf0] border-b border-slate-300/60 shadow-md no-print h-16 md:h-20">
     <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
         
-        <!-- 左側：Logo 與 桌機版選單 (對齊左側) -->
+        <!-- 左側：Logo 與 桌機版選單 (完美等高對齊) -->
         <div class="flex items-center h-full gap-8">
-            <!-- Logo 區塊 -->
+            <!-- Logo 區塊：完美對齊 Navbar 高度 -->
             <a href="course.html" class="flex items-center h-full p-0 m-0">
                 <img src="https://jhliao0408.github.io/imPlus/images/navLogo.jpg" alt="智慧行動生活+" class="h-full w-auto object-contain p-0 m-0 block">
             </a>
 
-            <!-- 桌機版選單 (在 md 以上解析度顯示，緊隨 Logo 旁，靠左對齊) -->
+            <!-- 桌機版選單 (md 以上顯示，緊隨 Logo 旁靠左對齊) -->
             <div class="hidden md:flex items-center h-full gap-6">
                 <!-- 選項 1：課表查詢 -->
                 <div class="relative group py-2">
                     <button class="flex items-center gap-2 text-slate-800 hover:text-emerald-600 font-extrabold text-base sm:text-lg md:text-xl transition-colors focus:outline-none">
-                        <i class="fa-solid fa-calendar-days text-slate-800 transition-colors group-hover:text-emerald-600"></i>
+                        <i class="fa-solid fa-calendar-days text-white transition-colors group-hover:text-emerald-600"></i>
                         <span>課表查詢</span>
                         <i class="fa-solid fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                     </button>
@@ -42,87 +42,80 @@
                     </div>
                 </div>
 
-                <!-- 選項 2：職訓生活 -->
+                <!-- 選項 2：職訓生活 (暫未開放) -->
                 <div class="relative group py-2">
                     <button class="flex items-center gap-2 text-slate-800 hover:text-emerald-600 font-extrabold text-base sm:text-lg md:text-xl transition-colors focus:outline-none opacity-50">
-                        <i class="fa-solid fa-circle-info text-slate-800 transition-colors group-hover:text-emerald-600"></i>
+                        <i class="fa-solid fa-circle-info text-white transition-colors group-hover:text-emerald-600"></i>
                         <span>職訓生活</span>
                         <i class="fa-solid fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                     </button>
-                    <!-- 下拉選單區塊 - 靠左對齊 -->
                     <div class="absolute left-0 top-full hidden group-hover:block bg-white text-slate-800 rounded-xl shadow-xl border border-slate-100 py-2 w-48 z-50 transform origin-top transition-all duration-200">
-                        <a href="#" class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-700 hover:text-emerald-600 transition-colors cursor-not-allowed opacity-50">
-                            <i class="fa-solid fa-book-open text-emerald-600"></i>
+                        <span class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-400 cursor-not-allowed opacity-60">
+                            <i class="fa-solid fa-book-open text-slate-400"></i>
                             <span>學員手冊</span>
-                        </a>
+                        </span>
                         <div class="border-t border-slate-100 my-1"></div>
-                        <a href="#" class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-700 hover:text-emerald-600 transition-colors cursor-not-allowed opacity-50">
-                            <i class="fa-solid fa-map-location text-emerald-600"></i>
+                        <span class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-400 cursor-not-allowed opacity-60">
+                            <i class="fa-solid fa-map-location text-slate-400"></i>
                             <span>分署位置</span>
-                        </a>
-                        <div class="border-t border-slate-100 my-1"></div>
-                        <a href="#" class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-700 hover:text-emerald-600 transition-colors cursor-not-allowed opacity-50">
-                            <i class="fa-solid fa-train-subway text-emerald-600"></i>
-                            <span>交通方式</span>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 右側：行動版漢堡選單按鈕 (在 md 以下解析度顯示，靠右對齊) -->
-        <div class="flex items-center md:hidden">
-            <button id="menu-toggle-btn" class="text-slate-800 hover:text-emerald-600 p-2 focus:outline-none transition-colors">
-                <i id="menu-icon" class="fa-solid fa-bars text-2xl"></i>
+        <!-- 右側：行動版漢堡選單按鈕 (垂直水平等高置中、靠右對齊) -->
+        <div class="flex items-center md:hidden h-full">
+            <button id="menu-toggle-btn" class="text-slate-800 hover:text-emerald-600 p-2 focus:outline-none transition-colors flex items-center justify-center h-full">
+                <!-- 加大按鈕點擊區域與對齊 -->
+                <i id="menu-icon" class="fa-solid fa-bars text-2xl sm:text-3xl"></i>
             </button>
         </div>
     </div>
 
-    <!-- 行動裝置 RWD 下拉式面板 (小於 md 時點擊漢堡按鈕展開) -->
-    <div id="mobile-menu-panel" class="hidden absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 py-4 px-6 flex flex-col gap-4">
-        <!-- 行動版選單 1：課表查詢 -->
-        <div class="border-b border-slate-300/30 pb-3">
-            <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
-                <i class="fa-solid fa-calendar-days text-emerald-600"></i>
-                <span>課表查詢</span>
+    <!-- ⚡【行動裝置 RWD 滑動下拉選單】 - 使用 max-height 搭配 transition 達成 Bootstrap 級 Slide Down 特效 -->
+    <div id="mobile-menu-panel" class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0">
+        <div class="py-4 px-6 flex flex-col gap-4">
+            <!-- 行動版選單 1：課表查詢 -->
+            <div class="border-b border-slate-300/30 pb-3">
+                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+                    <i class="fa-solid fa-calendar-days text-emerald-600"></i>
+                    <span>課表查詢</span>
+                </div>
+                <div class="pl-6 flex flex-col gap-2">
+                    <a href="month.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
+                        <i class="fa-solid fa-rectangle-list text-emerald-600"></i>
+                        <span>整月課表一覽</span>
+                    </a>
+                    <a href="course.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
+                        <i class="fa-solid fa-calendar-day text-emerald-600"></i>
+                        <span>詳細課表查詢</span>
+                    </a>
+                </div>
             </div>
-            <div class="pl-6 flex flex-col gap-2">
-                <a href="month.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
-                    <i class="fa-solid fa-rectangle-list text-emerald-600"></i>
-                    <span>整月課表一覽</span>
-                </a>
-                <a href="course.html" class="flex items-center gap-2 text-sm text-slate-700 hover:text-emerald-600 font-semibold py-1.5 transition-colors">
-                    <i class="fa-solid fa-calendar-day text-emerald-600"></i>
-                    <span>詳細課表查詢</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- 行動版選單 2：職訓生活 -->
-        <div class="pb-2 opacity-60">
-            <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
-                <i class="fa-solid fa-circle-info text-slate-600"></i>
-                <span>職訓生活</span>
-            </div>
-            <div class="pl-6 flex flex-col gap-2">
-                <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
-                    <i class="fa-solid fa-book-open text-slate-400"></i>
-                    <span>學員手冊 (未開放)</span>
-                </span>
-                <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
-                    <i class="fa-solid fa-map-location text-slate-400"></i>
-                    <span>分署位置 (未開放)</span>
-                </span>
-                <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
-                    <i class="fa-solid fa-train-subway text-slate-400"></i>
-                    <span>交通方式 (未開放)</span>
-                </span>
+            <!-- 行動版選單 2：職訓生活 -->
+            <div class="pb-2 opacity-60">
+                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+                    <i class="fa-solid fa-circle-info text-slate-600"></i>
+                    <span>職訓生活</span>
+                </div>
+                <div class="pl-6 flex flex-col gap-2">
+                    <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                        <i class="fa-solid fa-book-open text-slate-400"></i>
+                        <span>學員手冊 (未開放)</span>
+                    </span>
+                    <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
+                        <i class="fa-solid fa-map-location text-slate-400"></i>
+                        <span>分署位置 (未開放)</span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
 </nav>
 
-<!-- 頂部內容層 (Hero Banner) - 移至 Navbar 下方，內含隨機照片背景 + 深色半透明遮罩 -->
+<!-- 頂部內容層 (Hero Banner) -->
 <div class="relative bg-slate-900 text-white shadow-xl overflow-hidden no-print py-10 md:py-12">
     <!-- 背景圖片層 (明亮通透，透過 JS 自動隨機抽換 src) -->
     <div class="absolute inset-0 z-0">
@@ -130,7 +123,7 @@
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80"
             alt="Header Background"
             class="w-full h-full object-cover object-center transition-opacity duration-500 opacity-0">
-        <!-- 強化中性無色淡化遮罩 (提升至 45% 純黑半透明 + 2px 磨砂霧面，使照片更柔和、不干擾文字) -->
+        <!-- 強化中性無色淡化遮罩 -->
         <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-10"></div>
     </div>
 
@@ -153,7 +146,7 @@
     </div>
 </div>
 
-<!-- 漢堡選單開關的純 JS 腳本 -->
+<!-- ⚡【漢堡選單平滑折疊動畫控制 JS 腳本】 -->
 <script>
     (function() {
         const toggleBtn = document.getElementById('menu-toggle-btn');
@@ -163,30 +156,50 @@
         if (toggleBtn && mobilePanel) {
             toggleBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const isHidden = mobilePanel.classList.contains('hidden');
-                if (isHidden) {
+                const isCollapsed = mobilePanel.classList.contains('hidden') || mobilePanel.style.maxHeight === '0px' || !mobilePanel.style.maxHeight;
+                
+                if (isCollapsed) {
+                    // 1. 展開選單：先移除 hidden，再動態計算或給予足夠的 maxHeight
                     mobilePanel.classList.remove('hidden');
+                    // 延遲一小個 frame 確保瀏覽器能捕捉到狀態改變，從而觸發 CSS 過渡動畫
+                    requestAnimationFrame(() => {
+                        mobilePanel.style.maxHeight = '500px'; // 給予足夠高度
+                        mobilePanel.style.opacity = '1';
+                    });
+                    
                     menuIcon.classList.remove('fa-bars');
                     menuIcon.classList.add('fa-xmark');
                 } else {
-                    mobilePanel.classList.add('hidden');
-                    menuIcon.classList.remove('fa-xmark');
-                    menuIcon.classList.add('fa-bars');
+                    // 2. 收合選單：讓高度歸零，觸發過渡動畫
+                    closeMenu();
                 }
             });
 
-            // 點擊外面自動收合選單
+            // 點擊網頁外部任何角落自動平滑收合
             document.addEventListener('click', function() {
-                if (!mobilePanel.classList.contains('hidden')) {
-                    mobilePanel.classList.add('hidden');
-                    menuIcon.classList.remove('fa-xmark');
-                    menuIcon.classList.add('fa-bars');
+                if (mobilePanel.style.maxHeight && mobilePanel.style.maxHeight !== '0px') {
+                    closeMenu();
                 }
             });
-            
+
+            // 防止點擊選單內部時被判定為點擊外面
             mobilePanel.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
+
+            function closeMenu() {
+                mobilePanel.style.maxHeight = '0px';
+                mobilePanel.style.opacity = '0';
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+                
+                // 動態過渡完成後再用 hidden 隱藏，提升無障礙與效能
+                setTimeout(() => {
+                    if (mobilePanel.style.maxHeight === '0px') {
+                        mobilePanel.classList.add('hidden');
+                    }
+                }, 300); // 300ms 與 CSS transition 持續時間對齊
+            }
         }
     })();
 </script>
