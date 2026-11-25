@@ -172,13 +172,13 @@
                 menuIcon.classList.add('fa-xmark');
                 
                 // 滑動展開時先關閉捲軸防閃爍，並設定自適應視窗的最大可視高度
-                mobilePanel.style.overflowY = 'auto';
+                mobilePanel.style.overflowY = 'show';
                 mobilePanel.style.maxHeight = 'calc(100dvh - 3.5rem)';
                 
                 // 300ms 滑動動畫完成後，自動開放垂直滾動
                 setTimeout(function() {
                     if (isOpen) {
-                        mobilePanel.style.overflowY = 'auto';
+                        mobilePanel.style.overflowY = 'show';
                     }
                 }, 300);
             }
