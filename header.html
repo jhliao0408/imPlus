@@ -14,7 +14,7 @@
         
         <!-- 左側：Logo 與 桌機版選單 (對齊左側) -->
         <div class="flex items-center h-full gap-8">
-            <!-- Logo 區塊：滿版等高對齊 -->
+            <!-- Logo 區塊 -->
             <a href="course.html" class="flex items-center h-full p-0 m-0">
                 <img src="https://jhliao0408.github.io/imPlus/images/navLogo.jpg" alt="智慧行動生活+" class="h-full w-auto object-contain p-0 m-0 block">
             </a>
@@ -24,11 +24,11 @@
                 <!-- 選項 1：課表查詢 -->
                 <div class="relative group py-2">
                     <button class="flex items-center gap-2 text-slate-800 hover:text-emerald-600 font-extrabold text-base sm:text-lg md:text-xl transition-colors focus:outline-none">
-                        <i class="fa-solid fa-calendar-days text-white transition-colors group-hover:text-emerald-600"></i>
+                        <i class="fa-solid fa-calendar-days text-slate-800 transition-colors group-hover:text-emerald-600"></i>
                         <span>課表查詢</span>
                         <i class="fa-solid fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                     </button>
-                    <!-- 下拉選單區塊 -->
+                    <!-- 下拉選單區塊 - 靠左對齊 -->
                     <div class="absolute left-0 top-full hidden group-hover:block bg-white text-slate-800 rounded-xl shadow-xl border border-slate-100 py-2 w-48 z-50 transform origin-top transition-all duration-200">
                         <a href="month.html" class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-700 hover:text-emerald-600 transition-colors">
                             <i class="fa-solid fa-rectangle-list text-emerald-600"></i>
@@ -45,10 +45,11 @@
                 <!-- 選項 2：職訓生活 -->
                 <div class="relative group py-2">
                     <button class="flex items-center gap-2 text-slate-800 hover:text-emerald-600 font-extrabold text-base sm:text-lg md:text-xl transition-colors focus:outline-none opacity-50">
-                        <i class="fa-solid fa-circle-info text-white transition-colors group-hover:text-emerald-600"></i>
+                        <i class="fa-solid fa-circle-info text-slate-800 transition-colors group-hover:text-emerald-600"></i>
                         <span>職訓生活</span>
                         <i class="fa-solid fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                     </button>
+                    <!-- 下拉選單區塊 - 靠左對齊 -->
                     <div class="absolute left-0 top-full hidden group-hover:block bg-white text-slate-800 rounded-xl shadow-xl border border-slate-100 py-2 w-48 z-50 transform origin-top transition-all duration-200">
                         <span class="flex items-center gap-2 px-4 py-2.5 hover:bg-slate-50 font-bold text-xs sm:text-sm md:text-base text-slate-400 cursor-not-allowed opacity-60">
                             <i class="fa-solid fa-book-open text-slate-400"></i>
@@ -69,7 +70,7 @@
             </div>
         </div>
 
-        <!-- 右側：行動版漢堡選單按鈕 (md 以下顯示，靠右對齊) -->
+        <!-- 右側：行動版漢堡選單按鈕 (md 以下顯示，置中對齊) -->
         <div class="flex items-center md:hidden h-full">
             <button id="menu-toggle-btn" class="text-slate-800 hover:text-emerald-600 p-2 focus:outline-none transition-colors flex items-center justify-center h-full">
                 <i id="menu-icon" class="fa-solid fa-bars text-2xl sm:text-3xl"></i>
@@ -77,9 +78,9 @@
         </div>
     </div>
 
-    <!-- ⚡【行動裝置 RWD 純 Slide 滑動面板】(支援上下滾動、無淡入淡出) -->
+    <!-- ⚡【行動裝置 RWD 滑動面板】(支援原生流暢上下滾動，解決 iOS/Android 無法滑動問題) -->
     <div id="mobile-menu-panel" 
-         class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-0"
+         class="absolute top-full left-0 w-full bg-[#e8ebf0]/95 backdrop-blur-md border-b border-slate-300/80 shadow-lg md:hidden z-50 overflow-hidden transition-all duration-300 ease-in-out max-h-0 opacity-0"
          style="-webkit-overflow-scrolling: touch;">
         <div class="py-4 px-6 flex flex-col gap-4 pb-8">
             <!-- 行動版選單 1：課表查詢 -->
@@ -109,15 +110,15 @@
                 <div class="pl-6 flex flex-col gap-2">
                     <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-book-open text-slate-400"></i>
-                        <span>學員手冊</span>
+                        <span>學員手冊 (未開放)</span>
                     </span>
                     <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-map-location text-slate-400"></i>
-                        <span>分署位置</span>
+                        <span>分署位置 (未開放)</span>
                     </span>
                     <span class="flex items-center gap-2 text-sm text-slate-500 font-semibold py-1.5 cursor-not-allowed">
                         <i class="fa-solid fa-train-subway text-slate-400"></i>
-                        <span>交通方式</span>
+                        <span>交通方式 (未開放)</span>
                     </span>
                 </div>
             </div>
@@ -156,7 +157,7 @@
     </div>
 </div>
 
-<!-- ⚡【純 Slide 滑動與動態捲動控制腳本】 -->
+<!-- ⚡【極致流暢 RWD 漢堡選單動畫與滾動控制】 -->
 <script>
     (function() {
         const toggleBtn = document.getElementById('menu-toggle-btn');
@@ -171,14 +172,19 @@
                 menuIcon.classList.remove('fa-bars');
                 menuIcon.classList.add('fa-xmark');
                 
-                // 滑動展開時先關閉捲軸防閃爍，並設定自適應視窗的最大可視高度
-                mobilePanel.style.overflowY = 'show';
-                mobilePanel.style.maxHeight = 'calc(100dvh - 3.5rem)';
+                // 1. 先用 transition 展開面板 (優雅 Slide Down 特效)
+                mobilePanel.classList.remove('max-h-0', 'opacity-0');
+                mobilePanel.classList.add('max-h-[85vh]', 'opacity-100');
                 
-                // 300ms 滑動動畫完成後，自動開放垂直滾動
+                // 2. 為了防止在 300ms 動畫期間有微小的滾動跳動，先 hidden，等動畫跑完再切為 auto
+                mobilePanel.style.overflowY = 'hidden';
+                
                 setTimeout(function() {
                     if (isOpen) {
-                        mobilePanel.style.overflowY = 'show';
+                        // 3. 動畫結束，移除 overflow-hidden 改用原生滾動類別，確保絕對可以上下順暢捲動！
+                        mobilePanel.classList.remove('overflow-hidden');
+                        mobilePanel.classList.add('overflow-y-auto');
+                        mobilePanel.style.overflowY = 'auto';
                     }
                 }, 300);
             }
@@ -188,9 +194,14 @@
                 menuIcon.classList.remove('fa-xmark');
                 menuIcon.classList.add('fa-bars');
 
-                // 收合時立即隱藏捲軸，純粹向上收縮
+                // 收合時，立即補回 overflow-hidden 避免內容在收回時溢出
+                mobilePanel.classList.remove('overflow-y-auto');
+                mobilePanel.classList.add('overflow-hidden');
                 mobilePanel.style.overflowY = 'hidden';
-                mobilePanel.style.maxHeight = '0px';
+
+                // 觸發收回動畫 (Slide Up)
+                mobilePanel.classList.remove('max-h-[85vh]', 'opacity-100');
+                mobilePanel.classList.add('max-h-0', 'opacity-0');
             }
 
             toggleBtn.addEventListener('click', function(e) {
