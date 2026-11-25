@@ -110,7 +110,7 @@
 
             <!-- 行動版選單 2：職訓生活 -->
             <div class="border-b border-slate-300/30 pb-3">
-                 <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
+                <div class="flex items-center gap-2 text-slate-800 font-bold text-base mb-2">
                     <i class="fa-solid fa-circle-info text-emerald-600"></i>
                     <span>職訓好生活</span>
                 </div>
@@ -176,7 +176,7 @@
         const toggleBtn = document.getElementById('menu-toggle-btn');
         const mobilePanel = document.getElementById('mobile-menu-panel');
         const menuIcon = document.getElementById('menu-icon');
-
+        mobilePanel.style.overflowY = 'auto';
         if (toggleBtn && mobilePanel) {
             let isOpen = false;
 
@@ -187,7 +187,7 @@
 
                 // 💡 核心優化：限制面板最大高度為固定值（例如 260px，可依喜好微調），當高於 260px 時就會在內部產生滑順捲軸
                 mobilePanel.style.maxHeight = '520px';
-                mobilePanel.style.overflowY = 'auto';
+
             }
 
             function closeMenu() {
